@@ -1,0 +1,29 @@
+version: '3'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: poptape/categories/api:v0.1
+    ports:
+      - "1260:8220"
+    restart: "no"
+    depends_on:
+      - db
+    networks:
+      - net_poptape
+  db:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - "1261:5432"
+    volumes:
+      - poptape_categories_data:/var/lib/postgresql/data
+    networks:
+      - net_poptape
+networks:
+  net_poptape:
+    external: true
+volumes:
+  poptape_categories_data:
+  
