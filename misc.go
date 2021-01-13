@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/google/uuid"
-    "net/http"
-    "crypto/tls"
-    "log"
-    "os"
+	"crypto/tls"
 	"fmt"
-    "github.com/joho/godotenv"
+	"github.com/google/uuid"
+	"github.com/joho/godotenv"
+	"log"
+	"net/http"
+	"os"
 	"time"
 )
 
@@ -16,12 +16,11 @@ import (
 // ----------------------------------------------------------------------------
 
 func IsValidUUID(u string) bool {
-    _, err := uuid.Parse(u)
-    return err == nil
+	_, err := uuid.Parse(u)
+	return err == nil
 }
 
-
-func ValidAuction(auctionId, x string) (bool) {
+func ValidAuction(auctionId, x string) bool {
 
 	fullURL := GetAuctionURL() + auctionId
 	req, err := http.NewRequest("GET", fullURL, nil)
@@ -32,10 +31,10 @@ func ValidAuction(auctionId, x string) (bool) {
 	req.Header.Set("X-Access-Token", x)
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-    // skip verify to avoid x509 cert check - not sure if this is a good idea
-    tr := &http.Transport{
-        TLSClientConfig: &tls.Config{InsecureSkipVerify : true},
-    }
+	// skip verify to avoid x509 cert check - not sure if this is a good idea
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
 
 	client := &http.Client{Timeout: time.Second * 10, Transport: tr}
 	resp, e := client.Do(req)
@@ -51,14 +50,13 @@ func ValidAuction(auctionId, x string) (bool) {
 	return false
 }
 
-
 func GetAuctionURL() string {
 
-    err := godotenv.Load()
-    if err != nil {
-      log.Fatal("Error loading .env file")
-    }
-    return os.Getenv("AUCTIONURL")
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	return os.Getenv("AUCTIONURL")
 
 }
 
@@ -66,10 +64,10 @@ func CheckRequest(r *http.Request) (bool, int, string) {
 
 	contype := r.Header.Get("Content-type")
 
-    if !(contype == "application/json" ||
-        contype == "application/json; charset=UTF-8") {
-        badmess := `{"message": "Request must be json"}`
-        return false, http.StatusBadRequest, badmess
-    }
+	if !(contype == "application/json" ||
+		contype == "application/json; charset=UTF-8") {
+		badmess := `{"message": "Request must be json"}`
+		return false, http.StatusBadRequest, badmess
+	}
 	return true, http.StatusOK, ""
 }
