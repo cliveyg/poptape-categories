@@ -6,7 +6,8 @@ RUN mkdir /app
 ADD . /app
 WORKDIR /app
 
-# get deps
+# remove any go module files and get deps
+RUN rm -f go.mod go.sum
 RUN go mod init github.com/cliveyg/poptape-categories
 RUN go mod tidy
 RUN go mod download
