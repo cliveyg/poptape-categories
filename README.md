@@ -1,5 +1,5 @@
 # poptape-categories
-Caetgories microservice written in Go
+Categories microservice written in Go
 
 This microservice creates/reads/updates/deletes category data in a 
 Postgres database. Categories are used to supply field data for items and 

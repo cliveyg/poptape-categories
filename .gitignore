@@ -16,3 +16,5 @@
 !routes.go
 !models.go
 !main_test.go
+!go.mod
+!go.sum
