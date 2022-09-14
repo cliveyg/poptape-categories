@@ -3,9 +3,9 @@
 package main_test
 
 import (
-	"github.com/cliveyg/poptape-categories"
 	"bytes"
 	"encoding/json"
+	"github.com/cliveyg/poptape-categories"
 	"github.com/jarcoal/httpmock"
 	"github.com/joho/godotenv"
 	"log"
@@ -26,6 +26,7 @@ func TestMain(m *testing.M) {
 
 	a = main.App{}
 	a.Initialize(
+		os.Getenv("DB_HOST"),
 		os.Getenv("TESTDB_USERNAME"),
 		os.Getenv("TESTDB_PASSWORD"),
 		os.Getenv("TESTDB_NAME"))
