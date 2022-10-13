@@ -1,4 +1,9 @@
-version: '3'
+version: '3.4'
+
+volumes:
+  poptape_categories_data:
+    name: poptape_categories_data
+
 services:
   api:
     build:
@@ -7,14 +12,14 @@ services:
     image: poptape/categories/api:v0.1
     ports:
       - "1260:8220"
-    restart: "no"
+    restart: "always"
     depends_on:
       - db
     networks:
       - net_poptape
   db:
     image: postgres:alpine
-    restart: always
+    restart: "always"
     ports:
       - "1261:5432"
     environment:
@@ -28,6 +33,5 @@ services:
 networks:
   net_poptape:
     external: true
-volumes:
-  poptape_categories_data:
+
   
