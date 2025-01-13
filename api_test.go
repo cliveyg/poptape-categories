@@ -354,7 +354,7 @@ func TestDeleteReviewOk(t *testing.T) {
 
 }
 
-// failed delete review - cannot delete someone elses review
+// failed delete review - cannot delete someone else's review
 func TestDeleteFail(t *testing.T) {
 
 	httpmock.Activate()
